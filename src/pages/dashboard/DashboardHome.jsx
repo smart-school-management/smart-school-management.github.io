@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { HiOutlineKey, HiOutlineDeviceTablet, HiOutlineClipboardDocumentList, HiOutlineCalendar } from 'react-icons/hi2';
+import { HiOutlineClipboardList } from 'react-icons/hi';
+import { HiOutlineKey, HiOutlineDeviceTablet, HiOutlineCalendar } from 'react-icons/hi2';
 import { useAuth } from '@/context/AuthContext';
 import { api } from '@/api/client';
 import Badge from '@/components/ui/Badge';
@@ -36,7 +37,7 @@ export default function DashboardHome() {
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <StatCard icon={HiOutlineKey} label="সক্রিয় লাইসেন্স" value={licenses.filter((l) => l.status === 'active').length} color="brand" />
         <StatCard icon={HiOutlineDeviceTablet} label="ব্যবহৃত ডিভাইস" value={`${totalDevices}/${maxDevices || '-'}`} color="accent" />
-        <StatCard icon={HiOutlineClipboardDocumentList} label="মোট অর্ডার" value={orders.length} color="purple" />
+        <StatCard icon={HiOutlineClipboardList} label="মোট অর্ডার" value={orders.length} color="purple" />
         <StatCard icon={HiOutlineCalendar} label="একাউন্ট স্ট্যাটাস" value={<Badge status={user?.status} />} color="yellow" raw />
       </div>
 
