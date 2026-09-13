@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { HiOutlineUsers, HiOutlineClipboardList, HiOutlineKey, HiOutlineBanknotes } from 'react-icons/hi2';
+import { HiOutlineUsers, HiOutlineClipboardDocumentList, HiOutlineKey, HiOutlineBanknotes } from 'react-icons/hi2';
 import { api } from '@/api/client';
 import Badge from '@/components/ui/Badge';
 
@@ -14,7 +14,7 @@ export default function AdminDashboard() {
     <div className="space-y-6">
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <Card icon={HiOutlineUsers} label="মোট ব্যবহারকারী" value={stats?.total_users ?? '—'} color="brand" />
-        <Card icon={HiOutlineClipboardList} label="পেন্ডিং অর্ডার" value={stats?.pending_orders ?? '—'} color="yellow" />
+        <Card icon={HiOutlineClipboardDocumentList} label="পেন্ডিং অর্ডার" value={stats?.pending_orders ?? '—'} color="yellow" />
         <Card icon={HiOutlineKey} label="সক্রিয় লাইসেন্স" value={stats?.active_licenses ?? '—'} color="accent" />
         <Card icon={HiOutlineBanknotes} label="মোট আয় (নিশ্চিত)" value={`${stats?.total_revenue ?? 0} ৳`} color="purple" />
       </div>
