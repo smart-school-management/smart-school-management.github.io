@@ -27,7 +27,7 @@ export default function AdminOrders() {
   const act = async (status) => {
     setBusy(true);
     try {
-      await api.put(`admin/orders/${reviewing.id}`, { status, admin_note: note, max_devices: maxDevices }, { auth: true });
+      await api.post(`admin/orders/${reviewing.id}`, { status, admin_note: note, max_devices: maxDevices }, { auth: true });
       setReviewing(null);
       load();
     } finally {

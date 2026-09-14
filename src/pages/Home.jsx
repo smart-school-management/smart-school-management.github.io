@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
@@ -10,6 +10,11 @@ import DemoContact from '@/components/home/DemoContact';
 import CallToAction from '@/components/home/CallToAction';
 
 export default function Home() {
+
+  useEffect(() => {
+      document.title = `স্মার্ট স্কুল ম্যানেজমেন্ট সিস্টেম | Smart School Management System`;
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <Header />

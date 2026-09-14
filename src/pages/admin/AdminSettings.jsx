@@ -13,7 +13,7 @@ export default function AdminSettings() {
   const save = async (e) => {
     e.preventDefault();
     try {
-      await api.put('admin/settings', settings, { auth: true });
+      await api.post('admin/settings', settings, { auth: true });
       setStatus({ ok: true, msg: 'সেটিংস সংরক্ষিত হয়েছে।' });
     } catch (err) {
       setStatus({ ok: false, msg: err.message });

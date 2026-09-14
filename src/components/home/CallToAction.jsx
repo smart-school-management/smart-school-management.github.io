@@ -10,7 +10,7 @@ export default function CallToAction() {
           আজই আপনার প্রতিষ্ঠানকে করুন <br className="hidden md:block" /> সম্পূর্ণ ডিজিটাল
         </h2>
         <p className="mt-5 text-white/85 text-lg max-w-2xl mx-auto">
-          bKash, Rocket ও ব্যাংক ট্রান্সফারের মাধ্যমে সহজেই কিনুন এবং সময়, খরচ ও শ্রম — তিনটিই বাঁচান।
+          bKash, Rocket ও Bank ট্রান্সফারের মাধ্যমে সহজেই কিনুন এবং সময়, খরচ ও শ্রম — তিনটিই বাঁচান।
         </p>
         <div className="mt-8 flex flex-wrap gap-4 justify-center">
           <Link to="/buy" className="btn-white text-base">🚀 এখনই কিনুন</Link>

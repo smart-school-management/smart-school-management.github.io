@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { HiMenu, HiX } from 'react-icons/hi';
+import Logo from '@/components/ui/Logo';
 import { useAuth } from '@/context/AuthContext';
 import { APP_NAME } from '@/config';
 
@@ -41,9 +42,8 @@ export default function Header() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-brand-600 to-accent-500 flex items-center justify-center text-white font-black text-lg shadow-soft">
-            স
-          </div>
+          <Logo width={40} height={40}/>
+
           <span
             className={`font-extrabold text-lg leading-tight transition-colors ${
               scrolled ? 'text-slate-900' : 'text-white'

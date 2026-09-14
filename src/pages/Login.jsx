@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { HiOutlineEnvelope, HiOutlineLockClosed, HiOutlineEye, HiOutlineEyeSlash } from 'react-icons/hi2';
+import Logo from '@/components/ui/Logo';
 import { useAuth, ApiError } from '@/context/AuthContext';
 import { APP_NAME } from '@/config';
 
@@ -11,6 +12,10 @@ export default function Login() {
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  useEffect(()=>{
+    document.title = `লগিন | স্মার্ট স্কুল ম্যানেজমেন্ট সিস্টেম | Smart School Management System`;
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +38,7 @@ export default function Login() {
 
       <div className="relative w-full max-w-md">
         <Link to="/" className="flex items-center justify-center gap-2 mb-8">
-          <div className="h-12 w-12 rounded-xl bg-white flex items-center justify-center text-brand-700 font-black text-xl shadow-soft">স</div>
+          <Logo width={48} height={48}/>
         </Link>
 
         <div className="bg-white rounded-3xl shadow-2xl p-8">

@@ -26,7 +26,12 @@ export default function Hero() {
             <Link to="/buy" className="btn-accent text-base">
               🚀 এখনই কিনুন <HiOutlineArrowRight />
             </Link>
-            <a href="#demo" className="btn-white text-base">
+            <a href="#demo" className="btn-white text-base" onClick={(e) => {
+              e.preventDefault();
+                const hash = (new URL(e.target.href)).hash;
+                const el = document.querySelector(hash);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}>
               <HiOutlinePlayCircle className="text-xl" /> লাইভ ডেমো দেখুন
             </a>
           </div>

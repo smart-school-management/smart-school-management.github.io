@@ -4,6 +4,17 @@ import { FaFacebook, FaWhatsapp, FaEnvelope, FaPhoneAlt, FaYoutube } from 'react
 import { APP_NAME, COMPANY_NAME, COMPANY_URL, COPYRIGHT_START_YEAR, SUPPORT_PHONE, SUPPORT_WHATSAPP } from '@/config';
 
 export default function Footer() {
+  const scrollOrNavigate = (event) => {
+    event.preventDefault();
+    const href = event.target.href;
+    if (window.location.pathname !== '/') {
+      navigate('/' + href);
+    } else {
+      const hash = (new URL(href)).hash;
+      const el = document.querySelector(hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   const year = new Date().getFullYear();
   const yearRange = year > COPYRIGHT_START_YEAR ? `${COPYRIGHT_START_YEAR}–${year}` : `${COPYRIGHT_START_YEAR}`;
 
@@ -12,9 +23,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-brand-600 to-accent-500 flex items-center justify-center text-white font-black text-lg">
-              স
-            </div>
+            
             <span className="font-extrabold text-white text-lg">{APP_NAME}</span>
           </div>
           <p className="text-sm leading-relaxed text-slate-400">
@@ -30,10 +39,10 @@ export default function Footer() {
         <div>
           <h4 className="text-white font-bold mb-4">দ্রুত লিংক</h4>
           <ul className="space-y-2 text-sm">
-            <li><a href="#features" className="hover:text-white">ফিচারসমূহ</a></li>
-            <li><a href="#pricing" className="hover:text-white">প্যাকেজ ও মূল্য</a></li>
-            <li><a href="#reviews" className="hover:text-white">গ্রাহক মতামত</a></li>
-            <li><a href="#demo" className="hover:text-white">ডেমো ও যোগাযোগ</a></li>
+            <li><a href="#features" onClick={(e) => scrollOrNavigate(e)} className="hover:text-white">ফিচারসমূহ</a></li>
+            <li><a href="#pricing" onClick={(e) => scrollOrNavigate(e)}  className="hover:text-white">প্যাকেজ ও মূল্য</a></li>
+            <li><a href="#reviews" onClick={(e) => scrollOrNavigate(e)}  className="hover:text-white">গ্রাহক মতামত</a></li>
+            <li><a href="#demo" onClick={(e) => scrollOrNavigate(e)}  className="hover:text-white">ডেমো ও যোগাযোগ</a></li>
             <li><Link to="/buy" className="hover:text-white">এখনই কিনুন</Link></li>
           </ul>
         </div>
@@ -50,9 +59,9 @@ export default function Footer() {
         <div>
           <h4 className="text-white font-bold mb-4">যোগাযোগ</h4>
           <ul className="space-y-3 text-sm">
-            <li className="flex items-center gap-2"><FaPhoneAlt className="text-accent-500" /> {SUPPORT_PHONE}</li>
-            <li className="flex items-center gap-2"><FaEnvelope className="text-accent-500" /> support@needlecode.com</li>
-            <li className="flex items-center gap-2"><FaWhatsapp className="text-accent-500" /> হোয়াটসঅ্যাপে মেসেজ দিন</li>
+            <li className="flex items-center gap-2"><FaPhoneAlt className="text-accent-500" /> <a target="_blank" href={`tel:${SUPPORT_PHONE}`}>{SUPPORT_PHONE}</a></li>
+            <li className="flex items-center gap-2"><FaEnvelope className="text-accent-500" /> <a target="_blank" href="mailto:support@needlecode.com">support@needlecode.com</a></li>
+            <li className="flex items-center gap-2"><FaWhatsapp className="text-accent-500" /> <a target="_blank" href={`https://wa.me/8801847406830/`}>হোয়াটসঅ্যাপে মেসেজ দিন</a></li>
           </ul>
         </div>
       </div>

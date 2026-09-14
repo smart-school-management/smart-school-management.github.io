@@ -46,7 +46,7 @@ export default function LicensePage() {
           </div>
 
           <div className="flex items-center gap-3 bg-slate-900 rounded-xl px-4 py-3 mb-4">
-            <code className="text-accent-400 font-mono font-bold flex-1 overflow-x-auto whitespace-nowrap">{lic.license_key}</code>
+            <code className="text-white font-mono font-bold flex-1 overflow-x-auto whitespace-nowrap">{lic.license_key}</code>
             <button onClick={() => copy(lic.license_key)} className="text-white/70 hover:text-white shrink-0">
               {copied === lic.license_key ? <HiOutlineCheck className="text-accent-400" /> : <HiOutlineClipboardDocument />}
             </button>

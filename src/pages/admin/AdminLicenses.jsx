@@ -14,7 +14,7 @@ export default function AdminLicenses() {
   useEffect(() => { load(); }, []);
 
   const changeStatus = async (id, status) => {
-    await api.put(`admin/licenses/${id}`, { status }, { auth: true });
+    await api.post(`admin/licenses/${id}`, { status }, { auth: true });
     load();
   };
 

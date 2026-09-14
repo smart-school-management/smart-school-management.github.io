@@ -19,7 +19,7 @@ export default function ProfileSettings() {
     setLoading1(true);
     setProfileStatus(null);
     try {
-      const data = await api.put('auth/profile', profile, { auth: true });
+      const data = await api.post('auth/profile', profile, { auth: true });
       updateLocalUser(data);
       setProfileStatus({ ok: true, msg: 'প্রোফাইল সফলভাবে হালনাগাদ হয়েছে।' });
     } catch (err) {
@@ -38,7 +38,7 @@ export default function ProfileSettings() {
     setLoading2(true);
     setPwdStatus(null);
     try {
-      await api.put('auth/password', pwd, { auth: true });
+      await api.post('auth/password', pwd, { auth: true });
       setPwdStatus({ ok: true, msg: 'পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে।' });
       setPwd({ current_password: '', new_password: '', confirm_password: '' });
     } catch (err) {

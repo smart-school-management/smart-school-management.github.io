@@ -7,20 +7,24 @@ import { API_BASE_URL, TOKEN_STORAGE_KEY } from '@/config';
 export async function apiRequest(path, { method = 'GET', body, auth = false, headers = {} } = {}) {
   const url = `${API_BASE_URL.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
 
-  const finalHeaders = { Accept: 'application/json', ...headers };
-  if (body && !(body instanceof FormData)) {
-    finalHeaders['Content-Type'] = 'application/json';
-  }
+  const finalHeaders = { Origin: (new URL(location.href)).origin, Accept: 'application/json', ...headers };
 
   if (auth) {
     const token = localStorage.getItem(TOKEN_STORAGE_KEY);
     if (token) finalHeaders['Authorization'] = `Bearer ${token}`;
   }
 
+  // Avoid triggering a CORS preflight when possible: only unauthenticated,
+  // non-FormData requests can safely use text/plain instead of application/json.
+  const isSimple = body && !(body instanceof FormData) && !auth;
+  if (body && !(body instanceof FormData)) {
+    finalHeaders['Content-Type'] = isSimple ? 'text/plain' : 'application/json';
+  }
+
   let res;
   try {
     res = await fetch(url, {
-      method,
+      method,//mode: 'no-cors',
       headers: finalHeaders,
       body: body ? (body instanceof FormData ? body : JSON.stringify(body)) : undefined
     });
@@ -55,5 +59,6 @@ export const api = {
   get: (path, opts) => apiRequest(path, { ...opts, method: 'GET' }),
   post: (path, body, opts) => apiRequest(path, { ...opts, method: 'POST', body }),
   put: (path, body, opts) => apiRequest(path, { ...opts, method: 'PUT', body }),
-  del: (path, opts) => apiRequest(path, { ...opts, method: 'DELETE' })
+  //del: (path, opts) => apiRequest(path, { ...opts, method: 'DELETE' }),
+  del: (path, opts) => apiRequest(path, { ...opts, method: 'POST' }),
 };

@@ -1,5 +1,5 @@
 // কেন্দ্রীয় কনফিগারেশন — প্রয়োজনে .env ফাইলে পরিবর্তন করুন
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://tcp.freevar.com/ssms/api';
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://ssms.needlecode.com/api';
 export const SUPPORT_PHONE = import.meta.env.VITE_SUPPORT_PHONE || '+8801847406830';
 export const SUPPORT_WHATSAPP = `https://wa.me/${SUPPORT_PHONE.replace(/[^0-9]/g, '')}`;
 

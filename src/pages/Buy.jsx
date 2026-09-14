@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { HiCheckCircle, HiOutlinePhone } from 'react-icons/hi2';
+import Logo from '@/components/ui/Logo';
 import { FaWhatsapp } from 'react-icons/fa';
 import { api, ApiError } from '@/api/client';
 import { SUPPORT_PHONE, SUPPORT_WHATSAPP } from '@/config';
@@ -11,18 +12,20 @@ const initial = {
 };
 
 export default function Buy() {
-  const { packageSlug } = useParams();
   const navigate = useNavigate();
+  const { packageSlug } = useParams();
   const [packages, setPackages] = useState([]);
   const [settings, setSettings] = useState(null);
   const [form, setForm] = useState(initial);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(null);
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
-    api.get('packages').then(setPackages).catch(() => {});
-    api.get('settings').then(setSettings).catch(() => {});
+    api.get('packages').then(setPackages).catch(() => { });
+    api.get('settings').then(setSettings).catch(() => { });
+    document.title = `প্যাকেজ ক্রয়ের ফর্ম | স্মার্ট স্কুল ম্যানেজমেন্ট সিস্টেম | Smart School Management System`;
   }, []);
 
   useEffect(() => {
@@ -47,6 +50,57 @@ export default function Buy() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const copyToClipboard = async (text) => {
+    const value = String(text ?? '').trim();
+
+    if (!value) return;
+
+    try {
+      // Modern browsers: HTTPS / localhost
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(value);
+        return;
+      }
+
+      // Fallback for older browsers / non-secure contexts
+      const textarea = document.createElement('textarea');
+
+      textarea.value = value;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      textarea.style.top = '0';
+      textarea.style.opacity = '0';
+
+      document.body.appendChild(textarea);
+
+      textarea.focus();
+      textarea.select();
+      textarea.setSelectionRange(0, textarea.value.length);
+
+      const copied = document.execCommand('copy');
+
+      document.body.removeChild(textarea);
+
+      if (!copied) {
+        throw new Error('Copy command failed');
+      }
+      // Show toast only after successful copy
+      setToast({
+        type: 'success',
+        message: 'নম্বরটি কপি হয়েছে!'
+      });
+    } catch (error) {
+      setToast({
+        type: 'error',
+        message: 'কপি করা যায়নি!'
+      });
+      console.error('Failed to copy:', error);
+    }
+
+    setTimeout(() => { setToast(null); }, 4000);
   };
 
   if (success) {
@@ -80,7 +134,7 @@ export default function Buy() {
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-10">
           <Link to="/" className="inline-flex items-center gap-2 mb-4">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-brand-600 to-accent-500 flex items-center justify-center text-white font-black">স</div>
+            <Logo width={40} height={40}/>
           </Link>
           <h1 className="section-title">প্যাকেজ ক্রয়ের ফর্ম</h1>
           <p className="section-subtitle">নিচের তথ্যগুলো সঠিকভাবে পূরণ করুন এবং পেমেন্ট সম্পন্ন করার পর ট্রানজেকশন আইডি দিন।</p>
@@ -117,9 +171,9 @@ export default function Buy() {
               <input required name="address" value={form.address} onChange={onChange} className="input-field" />
             </div>
 
-			<hr className='border border-b-1 border-b-gray-200' />
+            <hr className='border border-b-1 border-b-gray-200' />
 
-			<h3 className="font-bold text-slate-900 text-lg pt-2">ড্যাশবোর্ড লগইনের জন্য</h3>
+            <h3 className="font-bold text-slate-900 text-lg pt-2">ড্যাশবোর্ড লগইনের জন্য</h3>
 
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
@@ -132,34 +186,83 @@ export default function Buy() {
               </div>
             </div>
 
-			<hr className='border border-b-1 border-b-gray-200' />
+            <hr className='border border-b-1 border-b-gray-200' />
 
             <h3 className="font-bold text-slate-900 text-lg pt-2">প্যাকেজ ও পেমেন্ট তথ্য</h3>
 
-            <div>
-              <label className="label-field">প্যাকেজ নির্বাচন করুন *</label>
-              <select required name="package_id" value={form.package_id} onChange={onChange} className="input-field">
-                <option value="">-- প্যাকেজ বেছে নিন --</option>
-                {packages.map((p) => (
-                  <option key={p.id} value={p.id}>{p.name} — {p.price}{p.period ? ` ${p.period}` : ''}</option>
-                ))}
-              </select>
-            </div>
-
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
-                <label className="label-field">পেমেন্ট মাধ্যম *</label>
-                <select required name="payment_method" value={form.payment_method} onChange={onChange} className="input-field">
-                  <option value="bKash">bKash</option>
-                  <option value="Rocket">Rocket</option>
-                  <option value="Nagad">Nagad</option>
-                  <option value="Bank">ব্যাংক ট্রান্সফার</option>
+                <label className="label-field">প্যাকেজ নির্বাচন করুন *</label>
+                <select required name="package_id" value={form.package_id} onChange={onChange} className="input-field">
+                  <option value="">-- প্যাকেজ বেছে নিন --</option>
+                  {packages.map((p) => (
+                    <option key={p.id} value={p.id}>{p.name} — {p.price}{p.period ? ` ${p.period}` : ''}</option>
+                  ))}
                 </select>
               </div>
               <div>
-                <label className="label-field">ট্রানজেকশন আইডি *</label>
-                <input required name="transaction_id" value={form.transaction_id} onChange={onChange} className="input-field" placeholder="TrxID" />
+                <label className="label-field">পেমেন্ট মাধ্যম *</label>
+                <select required name="payment_method" value={form.payment_method} onChange={onChange} className="input-field">
+                  <option value="bKash">বিকাশ (bKash)</option>
+                  <option value="Rocket">রকেট (Rocket)</option>
+                  <option value="Nagad">নগদ (Nagad)</option>
+                  <option value="Bank">ব্যাংক ট্রান্সফার</option>
+                </select>
               </div>
+            </div>
+
+            {form.package_id && form.payment_method && (() => {
+              const selectedPackage = packages.find(
+                (p) => String(p.id) === String(form.package_id)
+              );
+
+              const paymentInfo = {
+                bKash: {
+                  name: 'বিকাশ (bKash)',
+                  type: 'পারসোনাল নম্বর',
+                  number: settings?.bkash_number || '01705697337',
+                },
+                Rocket: {
+                  name: 'রকেট (Rocket)',
+                  type: 'মার্চেন্ট নম্বর',
+                  number: settings?.rocket_number || '01705697337',
+                },
+                Nagad: {
+                  name: 'নগদ (Nagad)',
+                  type: 'পারসোনাল নম্বর',
+                  number: settings?.nagad_number || '01521261218',
+                },
+                Bank: {
+                  name: 'ব্যাংক ট্রান্সফার',
+                  type: '',
+                  number: settings?.bank_details || 'DBBL A/C: 1381510173266',
+                },
+              };
+
+              const payment = paymentInfo[form.payment_method];
+
+              return (
+                <div className="card bg-slate-600 text-white">
+                  <h3 className="font-bold mb-2">ম্যানুয়ালি পেমেন্ট করুন</h3>
+
+                  {payment && (
+                    <p className="text-sm text-white mb-4">
+                      {payment.name} {payment.type && `${payment.type} `}
+                      <strong title="কপি করতে ক্লিক করুন" className='inline-block px-2 py-1 border border-slate-300 cursor-default' onClick={copyToClipboard}>{payment.number}</strong>
+                      {' '}এ tk. {selectedPackage?.price || '0'} পাঠান।
+                    </p>
+                  )}
+
+                  <p className="text-sm text-slate-200 mb-1">
+                    পেমেন্ট করার পর প্রাপ্ত ট্রানজেকশন আইডি নিচে লিখুন।
+                  </p>
+                </div>
+              );
+            })()}
+
+            <div>
+              <label className="label-field">ট্রানজেকশন আইডি *</label>
+              <input required name="transaction_id" value={form.transaction_id} onChange={onChange} className="input-field" placeholder="TrxID" />
             </div>
 
             {errors._general && <p className="text-red-500 text-sm font-semibold">{errors._general}</p>}
@@ -172,25 +275,25 @@ export default function Buy() {
             </button>
           </form>
 
-          <div className="lg:col-span-2 space-y-6">
-            <div className="card">
-              <h3 className="font-bold text-slate-900 mb-4">💳 প্রথমে পেমেন্ট করুন</h3>
+          <div className="hidden lg:block lg:col-span-2 space-y-6">
+            <div className="card bg-blue-700 text-white">
+              <h3 className="font-bold text-white mb-4">💳 প্রথমে পেমেন্ট করুন</h3>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between border-b border-slate-100 pb-2">
-                  <span className="text-slate-500">bKash (Personal/Send Money)</span>
-                  <strong>{settings?.bkash_number || '01847406830'}</strong>
+                  <span>bKash (Personal/Send Money)</span>
+                  <strong>{settings?.bkash_number || '01705697337'}</strong>
                 </div>
                 <div className="flex justify-between border-b border-slate-100 pb-2">
-                  <span className="text-slate-500">Rocket</span>
-                  <strong>{settings?.rocket_number || '01847406830-1'}</strong>
+                  <span>Rocket (Merchant)</span>
+                  <strong>{settings?.rocket_number || '01705697337'}</strong>
                 </div>
                 <div className="flex justify-between border-b border-slate-100 pb-2">
-                  <span className="text-slate-500">Nagad</span>
-                  <strong>{settings?.nagad_number || '01847406830'}</strong>
+                  <span>Nagad (Personal/Send Money)</span>
+                  <strong>{settings?.nagad_number || '01521261218'}</strong>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">ব্যাংক</span>
-                  <strong className="text-right">{settings?.bank_details || 'যোগাযোগ করুন'}</strong>
+                  <span>ব্যাংক ট্রান্সফার</span>
+                  <strong className="text-right">{settings?.bank_details || 'DBBL A/C: 1381510173266'}</strong>
                 </div>
               </div>
               <p className="text-xs text-slate-400 mt-4">টাকা পাঠানোর পর প্রাপ্ত ট্রানজেকশন আইডি ফর্মে লিখুন। পেমেন্ট ম্যানুয়ালি যাচাই করে লাইসেন্স ইমেইলে পাঠানো হবে।</p>
@@ -206,6 +309,27 @@ export default function Buy() {
           </div>
         </div>
       </div>
+
+      <p className="text-center text-sm mt-12">
+        <Link to="/" className="text-slate-400 hover:text-slate-600 m-0">← হোম পেইজে ফিরে যান</Link>
+      </p>
+
+      {toast && (
+        <div
+          className={`fixed top-5 right-5 z-[9999] flex items-center gap-3 rounded-xl px-4 py-3 shadow-xl text-sm font-semibold transition-all ${
+            toast.type === 'success'
+              ? 'bg-green-600 text-white'
+              : 'bg-red-600 text-white'
+          }`}
+          role="alert"
+        >
+          <span className="text-lg">
+            {toast.type === 'success' ? '✓' : '✕'}
+          </span>
+
+          <span>{toast.message}</span>
+        </div>
+      )}
     </div>
   );
 }

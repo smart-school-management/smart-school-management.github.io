@@ -22,7 +22,7 @@ export default function AdminUsers() {
 
   const saveUser = async (e) => {
     e.preventDefault();
-    await api.put(`admin/users/${editing.id}`, editing, { auth: true });
+    await api.post(`admin/users/${editing.id}`, editing, { auth: true });
     setEditing(null);
     load();
   };

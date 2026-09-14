@@ -23,7 +23,7 @@ export default function AdminPackages() {
   const save = async (e) => {
     e.preventDefault();
     const payload = { ...editing, features: editing.features.split('\n').map((f) => f.trim()).filter(Boolean) };
-    if (editing.id) await api.put(`admin/packages/${editing.id}`, payload, { auth: true });
+    if (editing.id) await api.post(`admin/packages/${editing.id}`, payload, { auth: true });
     else await api.post('admin/packages', payload, { auth: true });
     setEditing(null);
     load();
@@ -31,7 +31,7 @@ export default function AdminPackages() {
 
   const remove = async (id) => {
     if (!confirm('প্যাকেজটি মুছে ফেলতে চান?')) return;
-    await api.del(`admin/packages/${id}`, { auth: true });
+    await api.del(`admin/packages/del/${id}`, { auth: true });
     load();
   };
 

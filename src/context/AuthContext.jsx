@@ -45,7 +45,7 @@ export function AuthProvider({ children }) {
   }, [refreshMe]);
 
   const login = async (email, password) => {
-    const data = await api.post('auth/login', { email, password });
+    const data = await api.post('auth/login', { email, password }); // auth/login
     persist(data.token, data.user);
     setUser(data.user);
     return data.user;
