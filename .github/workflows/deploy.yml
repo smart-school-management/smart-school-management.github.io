@@ -35,6 +35,7 @@ jobs:
         env:
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL || 'https://tcp.freevar.com/ssms/api' }}
           VITE_SUPPORT_PHONE: ${{ vars.VITE_SUPPORT_PHONE || '+8801847406830' }}
+          ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 
