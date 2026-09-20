@@ -69,7 +69,7 @@ export default function Header() {
 
         <div className="hidden lg:flex items-center gap-3">
           <Link
-            to={isAuthenticated ? (isAdmin ? '/admin' : '/dashboard') : '/login'}
+            to={isAuthenticated ? (isAdmin ? '/manage' : '/dashboard') : '/login'}
             className={scrolled ? 'btn-outline !py-2.5 !px-5' : 'btn-white !py-2.5 !px-5'}
           >
             {isAuthenticated ? 'ড্যাশবোর্ডে যান' : 'লগইন'}
@@ -100,7 +100,7 @@ export default function Header() {
             </button>
           ))}
           <hr />
-          <Link to={isAuthenticated ? (isAdmin ? '/admin' : '/dashboard') : '/login'} className="btn-outline w-full" onClick={() => setOpen(false)}>
+          <Link to={isAuthenticated ? (isAdmin ? '/manage' : '/dashboard') : '/login'} className="btn-outline w-full" onClick={() => setOpen(false)}>
             {isAuthenticated ? 'ড্যাশবোর্ডে যান' : 'লগইন'}
           </Link>
           <Link to="/buy" className="btn-primary w-full" onClick={() => setOpen(false)}>

@@ -33,7 +33,7 @@ function ProtectedRoute({ children, adminOnly = false }) {
 function GuestRoute({ children }) {
   const { isAuthenticated, isLoading, isAdmin } = useAuth();
   if (isLoading) return <LoadingSpinner fullScreen text="যাচাই করা হচ্ছে..." />;
-  if (isAuthenticated) return <Navigate to={isAdmin ? '/admin' : '/dashboard'} replace />;
+  if (isAuthenticated) return <Navigate to={isAdmin ? '/manage' : '/dashboard'} replace />;
   return children;
 }
 
@@ -68,7 +68,7 @@ export default function App() {
         </Route>
 
         <Route
-          path="/admin"
+          path="/manage"
           element={
             <ProtectedRoute adminOnly>
               <AdminLayout />

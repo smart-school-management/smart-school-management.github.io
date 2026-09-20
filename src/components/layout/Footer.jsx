@@ -52,7 +52,7 @@ export default function Footer() {
           <ul className="space-y-2 text-sm">
             <li><Link to="/login" className="hover:text-white">গ্রাহক লগইন</Link></li>
             <li><Link to="/dashboard" className="hover:text-white">ইউজার ড্যাশবোর্ড</Link></li>
-            <li><Link to="/admin" className="hover:text-white">অ্যাডমিন প্যানেল</Link></li>
+            <li><Link to="/manage" className="hover:text-white">অ্যাডমিন প্যানেল</Link></li>
           </ul>
         </div>
 

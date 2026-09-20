@@ -23,7 +23,7 @@ export default function Login() {
     setError(null);
     try {
       const user = await login(form.email.trim(), form.password);
-      navigate(user.role === 'admin' ? '/admin' : '/dashboard', { replace: true });
+      navigate(user.role === 'admin' ? '/manage' : '/dashboard', { replace: true });
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'লগইন ব্যর্থ হয়েছে।');
     } finally {
