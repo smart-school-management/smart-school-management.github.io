@@ -46,11 +46,20 @@
 
 		window.addEventListener('message', (event) => {
 			if (event.origin !== IFRAME_ORIGIN) return;
-			if (event.data?.type !== 'ssms:url') return;
-			const path = event.data.path || '/';
-			const newUrl = path.startsWith('/') ? path : `/${path}`;
-			const current = window.location.pathname + window.location.search + window.location.hash;
-			if (current !== newUrl) window.history.pushState( {}, '', newUrl );
+			if (event.data?.type === 'ssms:url'){
+				const path = event.data.path || '/';
+				const newUrl = path.startsWith('/') ? path : `/${path}`;
+				const current = window.location.pathname + window.location.search + window.location.hash;
+				if (current !== newUrl) window.history.pushState( {}, '', newUrl );
+			}else if( event.data?.type !== 'ssms:parentorigin'){
+				iframe.contentWindow.postMessage(
+					{
+						type: 'ssms:parentorigin',
+						origin: window.location.origin
+					},
+					'https://qms.eu5.org'
+				);
+			}
 		});
 
 		function getParentRelativeUrl() {
