@@ -1,29 +1,82 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="স্মার্ট স্কুল ম্যানেজমেন্ট সিস্টেম — বাংলাদেশের স্কুল, কলেজ, মাদ্রাসা ও কোচিং সেন্টারের জন্য সম্পূর্ণ বাংলা ভাষার ডেস্কটপ ও ওয়েব ভিত্তিক ম্যানেজমেন্ট সফটওয়্যার। সময় বাঁচান, খরচ কমান, প্রতিষ্ঠান করুন সম্পূর্ণ ডিজিটাল।" />
-  <meta name="keywords" content="School Management Software, স্কুল ম্যানেজমেন্ট সফটওয়্যার, School ERP Bangladesh, Madrasha Software, Coaching Center Software" />
-  <meta name="theme-color" content="#1f33d6" />
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description"
+		content="স্মার্ট স্কুল ম্যানেজমেন্ট সিস্টেম — বাংলাদেশের স্কুল, কলেজ, মাদ্রাসা ও কোচিং সেন্টারের জন্য সম্পূর্ণ বাংলা ভাষার ডেস্কটপ ও ওয়েব ভিত্তিক ম্যানেজমেন্ট সফটওয়্যার। সময় বাঁচান, খরচ কমান, প্রতিষ্ঠান করুন সম্পূর্ণ ডিজিটাল।" />
+	<meta name="keywords"
+		content="School Management Software, স্কুল ম্যানেজমেন্ট সফটওয়্যার, School ERP Bangladesh, Madrasha Software, Coaching Center Software" />
+	<meta name="theme-color" content="#1f33d6" />
 
-  <meta property="og:title" content="স্মার্ট স্কুল ম্যানেজমেন্ট সিস্টেম" />
-  <meta property="og:description" content="বাংলাদেশের শিক্ষাপ্রতিষ্ঠানের জন্য সম্পূর্ণ ডিজিটাল সমাধান — সময় বাঁচান, খরচ কমান।" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://smart-school-management.github.io/" />
+	<meta property="og:title" content="স্মার্ট স্কুল ম্যানেজমেন্ট সিস্টেম" />
+	<meta property="og:description"
+		content="বাংলাদেশের শিক্ষাপ্রতিষ্ঠানের জন্য সম্পূর্ণ ডিজিটাল সমাধান — সময় বাঁচান, খরচ কমান।" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://smart-school-management.github.io/" />
 
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-  <!-- Bangla Fonts -->
-  <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@100..900&display=swap" rel="stylesheet">
+	<!-- Bangla Fonts -->
+	<link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@100..900&display=swap" rel="stylesheet">
 
-  <title>স্মার্ট স্কুল ম্যানেজমেন্ট সিস্টেম | NeedleCode IT Services</title>
+	<title>স্মার্ট স্কুল ম্যানেজমেন্ট সিস্টেম | NeedleCode IT Services</title>
+	<style>
+		html{
+			margin: 0px;
+			padding: 0px;
+			width: 100vw;
+			height: 100vh;
+		}
+		body{
+			position: relative;
+			margin: 0px;
+			padding: 0px;
+			width: 100%;
+			height: 100%;
+		}
+	</style>
 </head>
+
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
+	<iframe id="ssmsFrame" src="https://qms.eu5.org/ssms/" style="width:100%; height:100vh; border: none; outline: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; max-width: 100%; max-height: 100%; overflow: auto; z-index: 1;"></iframe>
+
+	<script>
+		const iframe = document.getElementById('ssmsFrame');
+		const IFRAME_ORIGIN = 'https://qms.eu5.org';
+		const IFRAME_BASE = '/ssms';
+
+		window.addEventListener('message', (event) => {
+			if (event.origin !== IFRAME_ORIGIN) return;
+			if (event.data?.type !== 'ssms:url') return;
+			const path = event.data.path || '/';
+			const newUrl = path.startsWith('/') ? path : `/${path}`;
+			const current = window.location.pathname + window.location.search + window.location.hash;
+			if (current !== newUrl) window.history.pushState( {}, '', newUrl );
+		});
+
+		function getParentRelativeUrl() {
+			return ( window.location.pathname + window.location.search + window.location.hash );
+		}
+
+		function syncParentToIframe() {
+			const path = getParentRelativeUrl();
+
+			iframe.contentWindow.postMessage(
+				{
+					type: 'ssms:navigate',
+					path
+				},
+				'https://qms.eu5.org'
+			);
+		}
+
+		iframe.addEventListener('load', syncParentToIframe);
+		window.addEventListener('popstate', syncParentToIframe);
+		window.addEventListener('hashchange', syncParentToIframe);
+	</script>
 </body>
 </html>
