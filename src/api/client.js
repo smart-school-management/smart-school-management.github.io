@@ -24,7 +24,7 @@ export async function apiRequest(path, { method = 'GET', body, auth = false, hea
   let res;
   try {
     res = await fetch(url, {
-      method,mode: 'no-cors',
+      method,//mode: 'no-cors',
       headers: finalHeaders,
       body: body ? (body instanceof FormData ? body : JSON.stringify(body)) : undefined
     });
