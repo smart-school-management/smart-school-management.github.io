@@ -13,7 +13,7 @@ export default function AdminOrders() {
 
   const load = () => {
     setLoading(true);
-    api.get('admin/orders', { auth: true }).then((data) => setOrders(data || [])).finally(() => setLoading(false));
+    api.get('manage/orders', { auth: true }).then((data) => setOrders(data || [])).finally(() => setLoading(false));
   };
 
   useEffect(() => { load(); }, []);
@@ -27,7 +27,7 @@ export default function AdminOrders() {
   const act = async (status) => {
     setBusy(true);
     try {
-      await api.post(`admin/orders/${reviewing.id}`, { status, admin_note: note, max_devices: maxDevices }, { auth: true });
+      await api.post(`manage/orders/${reviewing.id}`, { status, admin_note: note, max_devices: maxDevices }, { auth: true });
       setReviewing(null);
       load();
     } finally {

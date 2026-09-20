@@ -12,7 +12,7 @@ export default function AdminPackages() {
 
   const load = () => {
     setLoading(true);
-    api.get('admin/packages', { auth: true }).then((data) => setPackages(data || [])).finally(() => setLoading(false));
+    api.get('manage/packages', { auth: true }).then((data) => setPackages(data || [])).finally(() => setLoading(false));
   };
 
   useEffect(() => { load(); }, []);
@@ -23,15 +23,15 @@ export default function AdminPackages() {
   const save = async (e) => {
     e.preventDefault();
     const payload = { ...editing, features: editing.features.split('\n').map((f) => f.trim()).filter(Boolean) };
-    if (editing.id) await api.post(`admin/packages/${editing.id}`, payload, { auth: true });
-    else await api.post('admin/packages', payload, { auth: true });
+    if (editing.id) await api.post(`manage/packages/${editing.id}`, payload, { auth: true });
+    else await api.post('manage/packages', payload, { auth: true });
     setEditing(null);
     load();
   };
 
   const remove = async (id) => {
     if (!confirm('প্যাকেজটি মুছে ফেলতে চান?')) return;
-    await api.del(`admin/packages/del/${id}`, { auth: true });
+    await api.del(`manage/packages/del/${id}`, { auth: true });
     load();
   };
 

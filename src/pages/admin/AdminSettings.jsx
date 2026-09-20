@@ -7,13 +7,13 @@ export default function AdminSettings() {
   const [status, setStatus] = useState(null);
 
   useEffect(() => {
-    api.get('admin/settings', { auth: true }).then((data) => setSettings(data || {})).finally(() => setLoading(false));
+    api.get('manage/settings', { auth: true }).then((data) => setSettings(data || {})).finally(() => setLoading(false));
   }, []);
 
   const save = async (e) => {
     e.preventDefault();
     try {
-      await api.post('admin/settings', settings, { auth: true });
+      await api.post('manage/settings', settings, { auth: true });
       setStatus({ ok: true, msg: 'সেটিংস সংরক্ষিত হয়েছে।' });
     } catch (err) {
       setStatus({ ok: false, msg: err.message });

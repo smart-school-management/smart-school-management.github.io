@@ -11,7 +11,7 @@ export default function AdminUsers() {
 
   const load = () => {
     setLoading(true);
-    api.get(`admin/users${q ? `?q=${encodeURIComponent(q)}` : ''}`, { auth: true })
+    api.get(`manage/users${q ? `?q=${encodeURIComponent(q)}` : ''}`, { auth: true })
       .then((data) => setUsers(data || []))
       .finally(() => setLoading(false));
   };
@@ -22,7 +22,7 @@ export default function AdminUsers() {
 
   const saveUser = async (e) => {
     e.preventDefault();
-    await api.post(`admin/users/${editing.id}`, editing, { auth: true });
+    await api.post(`manage/users/${editing.id}`, editing, { auth: true });
     setEditing(null);
     load();
   };

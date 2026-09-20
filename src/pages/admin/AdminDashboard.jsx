@@ -8,7 +8,7 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
 
   useEffect(() => {
-    api.get('admin/dashboard', { auth: true }).then(setStats).catch(() => {});
+    api.get('manage/dashboard', { auth: true }).then(setStats).catch(() => {});
   }, []);
 
   return (

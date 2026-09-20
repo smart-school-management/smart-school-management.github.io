@@ -8,13 +8,13 @@ export default function AdminLicenses() {
 
   const load = () => {
     setLoading(true);
-    api.get('admin/licenses', { auth: true }).then((data) => setLicenses(data || [])).finally(() => setLoading(false));
+    api.get('manage/licenses', { auth: true }).then((data) => setLicenses(data || [])).finally(() => setLoading(false));
   };
 
   useEffect(() => { load(); }, []);
 
   const changeStatus = async (id, status) => {
-    await api.post(`admin/licenses/${id}`, { status }, { auth: true });
+    await api.post(`manage/licenses/${id}`, { status }, { auth: true });
     load();
   };
 
