@@ -78,6 +78,7 @@
     allowfullscreen></iframe>
 
 	<script>
+	(function(){
 		const iframe = document.getElementById('ssmsFrame');
 		const IFRAME_ORIGIN = 'https://qms.eu5.org';
 		const IFRAME_BASE = '/ssms';
@@ -104,7 +105,7 @@
 		function syncParentToIframe() {
 			const path = getParentRelativeUrl();
 			iframe.contentWindow.postMessage(
-				{ type: 'ssms:navigate', path: path },
+				{ type: 'ssms:navigate', path: path.startsWith('/#') ? path.substring(2) : path },
 				'https://qms.eu5.org'
 			);
 		}
@@ -112,6 +113,7 @@
 		iframe.addEventListener('load', syncParentToIframe);
 		window.addEventListener('popstate', syncParentToIframe);
 		window.addEventListener('hashchange', syncParentToIframe);
+	})();
 	</script>
 </body>
 </html>
